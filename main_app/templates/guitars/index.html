@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h1>Guitar List</h1>
+
+{% for guitar in guitars %}
+    <div class="card">
+        <div class="card-content">
+            <span class="card-title">{{ guitar.name }}</span>
+            <p>Type: {{ guitar.brand }} {{ guitar.model }}</p>
+            <p>Description: {{ guitar.description }}</p>
+        </div>
+    </div>
+{% endfor %}
+
+{% endblock %}
