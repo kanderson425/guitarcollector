@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h1>Guiar Details</h1>
+
+<div class="row">
+  <div class="col s6">
+    <div class="card">
+      <div class="card-content">
+          <span class="card-title">{{ guitar.name }}</span>
+          <p>Type: {{ guitar.make }} {{guitar.model}}</p>
+          <p>Description: {{ guitar.description }}</p>
+      </div>
+      <div class="card-action">
+        <a href="{% url 'guitars_update' guitar.id %}">Edit</a>
+        <a href="{% url 'guitars_delete' guitar.id %}">Delete</a>
+      </div>
+    </div>
+  </div>
+  <div class="col s6">
+    <form action="{% url 'add_practice' guitar.id %}" method="post">
+      {% csrf_token %}
+      {{ practice_form.as_p }}
+      <input type="submit" class="btn" value="Add Practice Duration">
+    </form>
+    <table class="striped">
+      <thead>
+        <tr><th>Date</th><th>Duration</th></tr>
+      </thead>
+      <tbody>
+        {% for practice in guitar.practice_set.all %}
+          <tr>
+            <td>{{practice.date}}</td>
+            <td>{{practice.get_hour_display}}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<script>
+  var dateEl = document.getElementById('id_date');
+  M.Datepicker.init(dateEl, {
+    format: 'mm-dd-yyyy',
+    defaultDate: new Date(),
+    setDefaultDate: true,
+    autoClose: true
+  });
+
+  var durationEl = document.getElementById('id_hour');
+  M.FormSelect.init(durationEl);
+</script>
+{% endblock %}
