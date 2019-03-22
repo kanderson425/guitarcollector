@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h1>Amp Details</h1>
+
+<div class="row">
+  <div class="col s6 col-offset-3">
+    <div class="card">
+      <div class="card-content">
+        <span class="card-title">{{ amp.make }}-{{amp.model}}</span>
+      </div>
+      <div class="card-action">
+        <a href="{% url 'amps_update' amp.id %}">Edit</a>
+        <a href="{% url 'amps_delete' amp.id %}">Delete</a>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

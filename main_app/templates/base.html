@@ -20,8 +20,16 @@
                 </ul>
                 <ul class="right">
                     <li><a href="{% url 'about' %}">About</a></li>
-                    <li><a href="{% url 'guitars_create' %}">Add a Guitar</a></li>
-                    <li><a href="{% url 'index' %}">View All My Guitars</a></li>
+                    {% if user.is_authenticated %}
+                        <li><a href="{% url 'amps_create' %}">Add an Amp</a></li>
+                        <li><a href="{% url 'amps_index' %}">View All Amps</a></li>
+                        <li><a href="{% url 'guitars_create' %}">Add a Guitar</a></li>
+                        <li><a href="{% url 'index' %}">View All My Guitars</a></li>
+                        <li><a href="{% url 'logout' %}">Log Out</a></li>
+                    {% else %}
+                        <li><a href="{% url 'signup' %}">Sign Up</a></li>
+                        <li><a href="{% url 'login' %}">Log In</a></li>
+                    {% endif %}    
                 </ul>
             </div>
         </nav>

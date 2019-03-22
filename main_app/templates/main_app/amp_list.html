@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h1>Amp List</h1>
+
+{% for amp in amp_list %}
+  <a href="{% url 'amps_detail' amp.id %}">
+    <div class="card">
+        <div class="card-content">
+            <span class="card-title">{{ amp.make }}-{{amp.model}}</span>
+        </div>
+    </div>
+  </a>
+{% endfor %}
+
+{% endblock %}

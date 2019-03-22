@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<h1>Guiar Details</h1>
+<h1>Guitar Details</h1>
 
 <div class="row">
   <div class="col s6">
@@ -16,13 +16,30 @@
         <a href="{% url 'guitars_delete' guitar.id %}">Delete</a>
       </div>
     </div>
-  </div>
+    {% for photo in guitar.photo_set.all %}
+      <img class="responsive-img card-panel" src="{{photo.url}}">
+    {% empty %}
+      <div class="card-panel teal-text center-align">No Photos Uploaded</div>
+    {% endfor %}
+    <form action="{% url 'add_photo' guitar.id %}" enctype="multipart/form-data" method="POST" class="card-panel">
+      {% csrf_token %}
+      <input type="file" name="photo-file">
+      <br><br>
+      <input type="submit" class="btn" value="Upload Photo">
+    </form> 
+  </div> 
   <div class="col s6">
     <form action="{% url 'add_practice' guitar.id %}" method="post">
       {% csrf_token %}
       {{ practice_form.as_p }}
-      <input type="submit" class="btn" value="Add Practice Duration">
+      <input type="submit" class="btn" value="Add Practice">
     </form>
+    <br>
+    {% if guitar.practice_enough_for_today %}
+      <div class="card-panel teal-text center-align">I guess you've practiced enough.</div>
+    {% else %}
+      <div class="card-panel teal-text center-align">Yeah, you definitely need to practice more.</div>
+    {% endif %}
     <table class="striped">
       <thead>
         <tr><th>Date</th><th>Duration</th></tr>
@@ -38,11 +55,52 @@
     </table>
   </div>
 </div>
-
+<hr>
+<div class="row">
+  <div class="col s6">
+    <h3>{{ guitar.name}}'s Amps</h3>
+    {% if guitar.amps.count %}
+      {% for amp in guitar.amps.all %}
+        <div class="card">
+          <div class="card-content">
+            <span class="card-title">
+              <span>{{amp.make}} - {{amp.model}}</span>
+            </span>
+          </div>
+        </div>
+      {% endfor %}
+    {% else %}
+        <h5>No Amps :(</h5>
+    {% endif %}
+  </div>
+  <!-- Available amps will come after this line-->
+  <div class="col s6">
+    <h3>Available Amps</h3>
+    {% if amps.count %}
+      {% for amp in amps.all %}
+        <div class="card">
+          <div class="card-content">
+            <span class="card-title">
+              A <span>{{amp.make}} - {{amp.model}}</span>
+            </span>
+          </div>
+          <div class="card-action">
+            <form action="{% url 'assoc_amp' guitar.id amp.id %}" method="post">
+              {% csrf_token %}
+              <button type="submit" class="btn">Add</button>
+            </form>
+          </div>
+        </div>
+      {% endfor %}
+    {% else %}
+      <h5>{{guitar.name}} Already Has All Amps Available</h5>
+    {% endif %}
+  </div>
+</div>
 <script>
   var dateEl = document.getElementById('id_date');
   M.Datepicker.init(dateEl, {
-    format: 'mm-dd-yyyy',
+    format: 'yyyy-mm-dd',
     defaultDate: new Date(),
     setDefaultDate: true,
     autoClose: true
