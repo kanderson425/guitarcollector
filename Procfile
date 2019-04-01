@@ -1,1 +1,1 @@
-web: gunicorn guitar-collector-app.wsgi
+web: gunicorn guitarcollector.wsgi
