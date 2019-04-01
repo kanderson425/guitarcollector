@@ -1,0 +1,1 @@
+web: gunicorn guitar-collector-app.wsgi
