@@ -3,6 +3,7 @@ body {
   min-height: 100vh;
   flex-direction: column;
   background-color: whitesmoke;
+
 }
   
 main {
@@ -20,12 +21,15 @@ main {
 }
 
 nav {
-  background-color: #6690E1;
+  background-color: #6690E1 !important;
   padding-top: 0;
   margin: 0;
       
 }
 
+li {
+  color: #6690E1 !important;
+}
 .imgs-container {
   padding-top: 5px;
 }
@@ -38,13 +42,13 @@ h1 {
 }
 
 .img-container {
-border-radius: 5%;
-object-fit: contain;
-height: 80%;
+border-radius: 5% !important;
+object-fit: contain !important;
+height: 80% !important;
 }
   
 img {
-  border: solid black 2px;
+  border: solid black 2px !important;
   height: 70%;
   width: 80%;
   padding: auto;
